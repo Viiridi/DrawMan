@@ -1,3 +1,4 @@
+/* styles.css */
 body {
     margin: 0;
     padding: 0;
@@ -16,7 +17,7 @@ canvas {
     border: 2px solid #000;
 }
 
-#overlayCanvas {
+.overlay-canvas {
     position: absolute; /* Position absolutely within the draw container */
     top: 0;
     left: 0;

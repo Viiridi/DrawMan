@@ -1,5 +1,4 @@
-// drawboard.js
-window.addEventListener('DOMContentLoaded', (event) => {
+window.addEventListener('DOMContentLoaded', () => {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const playerCount = parseInt(urlParams.get('players')) || 1; // Default to 1 player if no parameter is provided
@@ -31,26 +30,42 @@ window.addEventListener('DOMContentLoaded', (event) => {
         initDraw(canvas);
     }
 
-    const overlayCanvas = document.getElementById('overlayCanvas');
+    const overlayCanvas = document.createElement('canvas');
+    overlayCanvas.id = 'overlayCanvas';
     overlayCanvas.width = canvasWidth;
     overlayCanvas.height = totalCanvasHeight; // Set overlay canvas height to match total draw canvas height
-    const overlayCtx = overlayCanvas.getContext('2d');
-    const blockSize = (canvasHeight + 2) * playerCount; // Adjust block size to include spacing and borders for all players
+    overlayCanvas.style.position = 'absolute'; // Position the overlay canvas absolutely
+    overlayCanvas.style.top = '0'; // Align the overlay canvas to the top of the draw container
+    overlayCanvas.style.left = '0'; // Align the overlay canvas to the left of the draw container
+    overlayCanvas.style.pointerEvents = 'none'; // Disable pointer events to allow interaction with underlying canvases
+    drawContainer.appendChild(overlayCanvas);
+    
+    const nextButton = document.createElement('button');
+    nextButton.textContent = 'Next';
+    document.body.appendChild(nextButton);
+    
     let revealIndex = 0;
-
-    const nextButton = document.getElementById('nextButton');
     nextButton.addEventListener('click', function() {
-        overlayCtx.fillStyle = '#000'; // Set fill color to black
-        const blockHeight = canvasHeight + 3; // Adjust block height to include spacing and borders
-        overlayCtx.fillRect(0, revealIndex * blockHeight, overlayCanvas.width, blockHeight);
+        if (revealIndex < playerCount) {
+            const overlayCtx = overlayCanvas.getContext('2d');
+            overlayCtx.fillStyle = '#000'; // Set fill color to black
+            const blockHeight = canvasHeight + 3; // Adjust block height to include spacing and borders
+            overlayCtx.fillRect(0, revealIndex * blockHeight, overlayCanvas.width, blockHeight);
+            revealIndex++;
+        }
         
-        revealIndex++;
         if (revealIndex === playerCount) {
-            nextButton.textContent = 'Reveal';
-        } else if (revealIndex > playerCount) {
-            overlayCtx.clearRect(0, 0, overlayCanvas.width, overlayCanvas.height);
-            revealIndex = 0;
-            nextButton.textContent = 'Next';
+            nextButton.style.display = 'none'; // Hide the next button when all overlays are revealed
+            const revealButton = document.createElement('button');
+            revealButton.textContent = 'Reveal';
+            revealButton.addEventListener('click', function() {
+                const overlayCtx = overlayCanvas.getContext('2d');
+                overlayCtx.clearRect(0, 0, overlayCanvas.width, overlayCanvas.height);
+                nextButton.style.display = 'block'; // Restore visibility of the next button
+                revealButton.remove(); // Remove the reveal button
+                revealIndex = 0; // Reset revealIndex
+            });
+            document.body.appendChild(revealButton);
         }
     });
 });

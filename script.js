@@ -1,10 +1,11 @@
 // script.js
-document.getElementById('startButton').addEventListener('click', function(event) {
-    event.preventDefault(); // Prevent default form submission behavior
-    
-    // Get selected number of players
-    const playerCount = document.getElementById('playerCount').value;
-    
-    // Redirect to drawboard.html with number of players as a query parameter
-    window.location.href = 'drawboard.html?players=' + encodeURIComponent(playerCount);
+document.addEventListener('DOMContentLoaded', function() {
+    const playerForm = document.getElementById('playerForm');
+    const startButton = document.getElementById('startButton');
+
+    startButton.addEventListener('click', function(event) {
+        event.preventDefault();
+        const playerCount = parseInt(document.getElementById('playerCount').value);
+        window.location.href = `drawboard.html?players=${playerCount}`;
+    });
 });
