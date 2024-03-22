@@ -6,10 +6,13 @@ document.addEventListener('DOMContentLoaded', function() {
     const nextButton = document.getElementById('nextButton');
     const sendButton = document.getElementById('sendButton');
 
+    const urlParams = new URLSearchParams(window.location.search);
+    const currentPlayer = parseInt(urlParams.get('player')); // Get the player number from the URL parameter
+
     let currentStep = 0; // Current step in the drawing process
     const steps = ['head', 'body', 'legs']; // Steps in the drawing process
 
-    let drawingDataPlayer1 = { head: '', body: '', legs: '' }; // Drawing data for Player 1
+    let drawingData = { head: '', body: '', legs: '' }; // Drawing data for the current player
 
     // Function to start the next drawing step
     function nextStep() {
@@ -18,11 +21,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Store the data URL in the corresponding player's drawing data
         if (currentStep === 0) {
-            drawingDataPlayer1.head = dataURL; // Store head drawing for Player 1
+            drawingData.head = dataURL;
         } else if (currentStep === 1) {
-            drawingDataPlayer1.body = dataURL; // Store body drawing for Player 1
+            drawingData.body = dataURL;
         } else if (currentStep === 2) {
-            drawingDataPlayer1.legs = dataURL; // Store legs drawing for Player 1
+            drawingData.legs = dataURL;
         }
 
         // Clear the canvas
@@ -49,10 +52,10 @@ document.addEventListener('DOMContentLoaded', function() {
         const dataURL = canvas.toDataURL('image/png');
 
         // Store the data URL in the corresponding player's drawing data
-        drawingDataPlayer1.legs = dataURL; // Store legs drawing for Player 1
+        drawingData.legs = dataURL;
 
-        // Send drawing data to the results page for Player 1
-        localStorage.setItem('drawingDataPlayer1', JSON.stringify(drawingDataPlayer1));
+        // Send drawing data to the results page for the current player
+        localStorage.setItem(`drawingDataPlayer${currentPlayer}`, JSON.stringify(drawingData));
         
         // Redirect to the results page
         window.location.href = 'result.html';

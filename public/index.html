@@ -6,21 +6,11 @@
     <title>Player Selection</title>
 </head>
 <body>
-    <h2>Select Your Player</h2>
-    <button onclick="selectPlayer(1)">Player 1</button>
-    <button onclick="selectPlayer(2)">Player 2</button>
-    <button onclick="selectPlayer(3)">Player 3</button>
-
-    <script>
-        function selectPlayer(player) {
-            if (player === 1) {
-                window.location.href = 'drawboard_player1.html';
-            } else if (player === 2) {
-                window.location.href = 'drawboard_player2.html';
-            } else if (player === 3) {
-                window.location.href = 'drawboard_player3.html';
-            }
-        }
-    </script>
+    <h1>Select Your Player</h1>
+    <ul>
+        <li><a href="drawboard.html?player=1">Player 1</a></li>
+        <li><a href="drawboard.html?player=2">Player 2</a></li>
+        <li><a href="drawboard.html?player=3">Player 3</a></li>
+    </ul>
 </body>
 </html>
