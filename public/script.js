@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     startButton.addEventListener('click', function(event) {
         event.preventDefault();
-        const playerCount = parseInt(document.getElementById('playerCount').value);
-        window.location.href = `drawboard.html?players=${playerCount}`;
+        const playerNumber = parseInt(document.getElementById('playerNumber').value);
+        window.location.href = `drawboard.html?player=${playerNumber}`;
     });
 });

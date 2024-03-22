@@ -1,0 +1,14 @@
+.stack {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+}
+
+#player1Stack {
+    float: left;
+}
+
+#player2Stack {
+    float: right;
+}

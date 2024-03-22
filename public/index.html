@@ -3,23 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Player Selector</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Player Selection</title>
 </head>
 <body>
-    <div class="container">
-        <h1>Select Number of Players</h1>
-        <form id="playerForm">
-            <label for="playerCount">Number of Players:</label>
-            <select id="playerCount">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <!-- Add more options as needed -->
-            </select>
-            <button id="startButton">Start</button>
-        </form>
-    </div>
-    <script src="script.js"></script>
+    <h2>Select Your Player</h2>
+    <button onclick="selectPlayer(1)">Player 1</button>
+    <button onclick="selectPlayer(2)">Player 2</button>
+    <button onclick="selectPlayer(3)">Player 3</button>
+
+    <script>
+        function selectPlayer(player) {
+            if (player === 1) {
+                window.location.href = 'drawboard_player1.html';
+            } else if (player === 2) {
+                window.location.href = 'drawboard_player2.html';
+            } else if (player === 3) {
+                window.location.href = 'drawboard_player3.html';
+            }
+        }
+    </script>
 </body>
 </html>

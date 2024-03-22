@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Results</title>
+    <!-- Include any necessary stylesheets -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            display: flex;
+            justify-content: flex-start;
+            align-items: flex-start;
+            margin-top: 20px;
+            padding: 10px;
+        }
+
+        .player-container {
+            margin-right: 20px;
+        }
+
+        .canvas-container {
+            margin-bottom: 20px;
+        }
+
+        canvas {
+            border: 1px solid #000;
+            margin-bottom: 5px;
+            width: 200px;
+            height: 200px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="player-container">
+            <h2>Player 1's Drawings</h2>
+            <div class="canvas-container">
+                <canvas id="headCanvasPlayer1" width="200" height="200"></canvas>
+            </div>
+            <div class="canvas-container">
+                <canvas id="bodyCanvasPlayer1" width="200" height="200"></canvas>
+            </div>
+            <div class="canvas-container">
+                <canvas id="legsCanvasPlayer1" width="200" height="200"></canvas>
+            </div>
+        </div>
+
+        <div class="player-container">
+            <h2>Player 2's Drawings</h2>
+            <div class="canvas-container">
+                <canvas id="headCanvasPlayer2" width="200" height="200"></canvas>
+            </div>
+            <div class="canvas-container">
+                <canvas id="bodyCanvasPlayer2" width="200" height="200"></canvas>
+            </div>
+            <div class="canvas-container">
+                <canvas id="legsCanvasPlayer2" width="200" height="200"></canvas>
+            </div>
+        </div>
+
+        <div class="player-container">
+            <h2>Player 3's Drawings</h2>
+            <div class="canvas-container">
+                <canvas id="headCanvasPlayer3" width="200" height="200"></canvas>
+            </div>
+            <div class="canvas-container">
+                <canvas id="bodyCanvasPlayer3" width="200" height="200"></canvas>
+            </div>
+            <div class="canvas-container">
+                <canvas id="legsCanvasPlayer3" width="200" height="200"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Include the result.js script -->
+    <script src="result.js"></script>
+</body>
+</html>
