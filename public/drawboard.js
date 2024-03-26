@@ -6,20 +6,22 @@ document.addEventListener('DOMContentLoaded', function() {
     const nextButton = document.getElementById('nextButton');
     const sendButton = document.getElementById('sendButton');
 
+    const nameInput = document.getElementById('nameInput');
+    const characterNameInput = document.getElementById('characterName');
+
     const urlParams = new URLSearchParams(window.location.search);
     const currentPlayer = parseInt(urlParams.get('player')); // Get the player number from the URL parameter
 
     let currentStep = 0; // Current step in the drawing process
-    const steps = ['head', 'body', 'legs']; // Steps in the drawing process
+    const steps = ['head', 'body', 'legs', 'name']; // Steps in the drawing process
 
-    let drawingData = { head: '', body: '', legs: '' }; // Drawing data for the current player
+    let drawingData = { head: '', body: '', legs: '', name: '' }; // Drawing data for the current player
 
     // Function to start the next drawing step
     function nextStep() {
         // Get data URL of the canvas
         const dataURL = canvas.toDataURL('image/png');
 
-        // Store the data URL in the corresponding player's drawing data
         if (currentStep === 0) {
             drawingData.head = dataURL;
         } else if (currentStep === 1) {
@@ -28,22 +30,21 @@ document.addEventListener('DOMContentLoaded', function() {
             drawingData.legs = dataURL;
         }
 
-        // Clear the canvas
-        clearCanvas();
+        currentStep++;
+        prompt.textContent = `Draw the ${steps[currentStep]}`;
 
-        // Proceed to the next step if available
-        if (currentStep < steps.length - 1) {
-            currentStep++;
-            // Update UI to reflect next step
-            prompt.textContent = `Draw the ${steps[currentStep]}`;
-        }
-
-        // Check if it's the last step and update button visibility
-        if (currentStep === steps.length - 1) {
+        if (currentStep === 3) {
+            canvas.style.display = 'none';
+            nameInput.style.display = 'block';
             nextButton.style.display = 'none';
             sendButton.style.display = 'block';
+            return;
         }
+
+        // Clear the canvas
+        clearCanvas();
     }
+
 
     nextButton.addEventListener('click', nextStep);
 
@@ -53,6 +54,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Store the data URL in the corresponding player's drawing data
         drawingData.legs = dataURL;
+
+        // Get the character's name
+        const characterName = characterNameInput.value.trim();
+        if (characterName) {
+            drawingData.name = characterName;
+        } else {
+            // If the name is empty, provide a default name
+            drawingData.name = `Player ${currentPlayer}`;
+        }
 
         // Send drawing data to the results page for the current player
         localStorage.setItem(`drawingDataPlayer${currentPlayer}`, JSON.stringify(drawingData));

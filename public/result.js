@@ -17,18 +17,23 @@ document.addEventListener('DOMContentLoaded', function() {
     const bodyCanvasPlayer3 = document.getElementById('bodyCanvasPlayer3');
     const legsCanvasPlayer3 = document.getElementById('legsCanvasPlayer3');
 
+    // Display character's name for each player
+    document.querySelector('.player-container:nth-child(1) h2').textContent = drawingDataPlayer1.name + "'s Drawings";
+    document.querySelector('.player-container:nth-child(2) h2').textContent = drawingDataPlayer2.name + "'s Drawings";
+    document.querySelector('.player-container:nth-child(3) h2').textContent = drawingDataPlayer3.name + "'s Drawings";
+
     // Load drawing data onto the canvases for each player
     loadCanvasImage(headCanvasPlayer1, drawingDataPlayer1.head);
-    loadCanvasImage(bodyCanvasPlayer1, drawingDataPlayer2.body);
-    loadCanvasImage(legsCanvasPlayer1, drawingDataPlayer3.legs);
+    loadCanvasImage(bodyCanvasPlayer1, drawingDataPlayer1.body);
+    loadCanvasImage(legsCanvasPlayer1, drawingDataPlayer1.legs);
 
     loadCanvasImage(headCanvasPlayer2, drawingDataPlayer2.head);
-    loadCanvasImage(bodyCanvasPlayer2, drawingDataPlayer3.body);
-    loadCanvasImage(legsCanvasPlayer2, drawingDataPlayer1.legs);
+    loadCanvasImage(bodyCanvasPlayer2, drawingDataPlayer2.body);
+    loadCanvasImage(legsCanvasPlayer2, drawingDataPlayer2.legs);
 
     loadCanvasImage(headCanvasPlayer3, drawingDataPlayer3.head);
-    loadCanvasImage(bodyCanvasPlayer3, drawingDataPlayer1.body);
-    loadCanvasImage(legsCanvasPlayer3, drawingDataPlayer2.legs);
+    loadCanvasImage(bodyCanvasPlayer3, drawingDataPlayer3.body);
+    loadCanvasImage(legsCanvasPlayer3, drawingDataPlayer3.legs);
 });
 
 function loadCanvasImage(canvas, imageData) {

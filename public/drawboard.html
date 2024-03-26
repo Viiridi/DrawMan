@@ -8,9 +8,13 @@
 </head>
 <body>
     <h2 id="prompt">Draw the head</h2> <!-- Text indicating which body part to draw -->
-    <canvas id="canvas" width="600" height="400"></canvas>
+    <canvas id="canvas" width="600" height="400" style="display: block;"></canvas>
     <button id="nextButton">Next</button>
     <button id="sendButton" style="display: none;">Send</button>
+    <div id="nameInput" style="display: none;">
+        <label for="characterName">Enter character's name:</label>
+        <input type="text" id="characterName" name="characterName">
+    </div>
     <script src="drawboard.js"></script>
 </body>
 </html>
