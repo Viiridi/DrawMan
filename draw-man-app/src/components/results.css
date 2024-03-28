@@ -1,0 +1,28 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-top: 20px;
+    padding: 10px;
+}
+
+.player-container {
+    margin-right: 20px;
+}
+
+.canvas-container {
+    margin-bottom: 0; /* Remove the bottom margin */
+}
+
+canvas {
+    border: 1px solid #000;
+    margin-bottom: 0; /* Remove the bottom margin */
+    width: 200px;
+    height: 200px;
+}
