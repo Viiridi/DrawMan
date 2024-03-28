@@ -1,0 +1,27 @@
+.player-selection-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+  }
+  
+  .select-player-heading {
+    text-align: center;
+  }
+  
+  .player-buttons-container {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .player-button {
+    border: none;
+    padding: 0;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 250px;
+    height: 170px;
+  }
+  

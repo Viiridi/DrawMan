@@ -7,7 +7,8 @@ function DrawBoard() {
   const [isDrawing, setIsDrawing] = useState(false);
   const [characterName, setCharacterName] = useState('');
   const [player, setPlayer] = useState(null);
-
+  const [currentColor, setCurrentColor] = useState('#000'); // Default color is black
+  const [brushSize, setBrushSize] = useState(5); // Default brush size
   const canvasRef = useRef(null);
   const location = useLocation();
 
@@ -17,10 +18,8 @@ function DrawBoard() {
     setPlayer(playerParam);
   }, [location]);
 
-  const canvasWidth = 600; // Define canvas width
-  const canvasHeight = 400; // Define canvas height
-
   const steps = ['head', 'body', 'legs', 'name'];
+  const instructions = ['Draw the head', 'Draw the body', 'Draw the legs', 'Enter character\'s name'];
 
   const nextStep = () => {
     const canvas = canvasRef.current;
@@ -54,6 +53,8 @@ function DrawBoard() {
     if (!canvas) return;
 
     const ctx = canvas.getContext('2d');
+    ctx.strokeStyle = currentColor; // Set the stroke color
+    ctx.lineWidth = brushSize; // Set the brush size
     ctx.lineTo(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
     ctx.stroke();
   };
@@ -91,30 +92,60 @@ function DrawBoard() {
     window.location.href = '/results';
   };
 
+  const handleColorChange = (color) => {
+    setCurrentColor(color);
+  };
+
+  const handleBrushSizeChange = (size) => {
+    setBrushSize(size);
+  };
+
   return (
-    <div>
-      {currentStep < 3 ? (
-        <>
-          <h2>Draw the {steps[currentStep]}</h2>
-          <canvas
-            ref={canvasRef}
-            width={canvasWidth} // Set canvas width
-            height={canvasHeight} // Set canvas height
-            style={{ display: 'block', border: '1px solid #000' }}
-            onMouseDown={startDrawing}
-            onMouseMove={draw}
-            onMouseUp={stopDrawing}
-            onMouseOut={stopDrawing}
-          ></canvas>
-          <button onClick={nextStep}>Next</button>
-        </>
-      ) : (
-        <div>
-          <h2>Enter character's name:</h2>
-          <input type="text" value={characterName} onChange={handleNameInputChange} />
-          <button onClick={handleSendButtonClick}>Send</button>
-        </div>
-      )}
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+      <div>
+        {currentStep < 3 ? (
+          <div>
+            <h2>{instructions[currentStep]}</h2>
+            <div style={{ display: 'flex' }}>
+              <canvas
+                ref={canvasRef}
+                width="600"
+                height="400"
+                style={{ border: '1px solid #000', marginRight: '20px' }}
+                onMouseDown={startDrawing}
+                onMouseMove={draw}
+                onMouseUp={stopDrawing}
+                onMouseOut={stopDrawing}
+              ></canvas>
+              <div>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '5px', marginBottom: '20px' }}>
+                  <div style={{ backgroundColor: '#ff0000', width: '50px', height: '50px', borderRadius: '50%', cursor: 'pointer' }} onClick={() => handleColorChange('#ff0000')}></div>
+                  <div style={{ backgroundColor: '#00ff00', width: '50px', height: '50px', borderRadius: '50%', cursor: 'pointer' }} onClick={() => handleColorChange('#00ff00')}></div>
+                  <div style={{ backgroundColor: '#0000ff', width: '50px', height: '50px', borderRadius: '50%', cursor: 'pointer' }} onClick={() => handleColorChange('#0000ff')}></div>
+                  <div style={{ backgroundColor: '#ffff00', width: '50px', height: '50px', borderRadius: '50%', cursor: 'pointer' }} onClick={() => handleColorChange('#ffff00')}></div>
+                  <div style={{ backgroundColor: '#ff00ff', width: '50px', height: '50px', borderRadius: '50%', cursor: 'pointer' }} onClick={() => handleColorChange('#ff00ff')}></div>
+                  <div style={{ backgroundColor: '#00ffff', width: '50px', height: '50px', borderRadius: '50%', cursor: 'pointer' }} onClick={() => handleColorChange('#00ffff')}></div>
+                  <div style={{ backgroundColor: '#000000', width: '50px', height: '50px', borderRadius: '50%', cursor: 'pointer' }} onClick={() => handleColorChange('#000000')}></div>
+                  <div style={{ backgroundColor: '#ffffff', width: '50px', height: '50px', borderRadius: '50%', cursor: 'pointer' }} onClick={() => handleColorChange('#ffffff')}></div>
+                </div>
+                <input type="color" value={currentColor} onChange={(e) => handleColorChange(e.target.value)} style={{ marginBottom: '20px' }} /> {/* Color picker */}
+                <div style={{ marginBottom: '20px' }}>
+                  <button onClick={() => handleBrushSizeChange(5)} style={{ width: '30px', height: '30px', borderRadius: '50%', border: 'none', marginRight: '10px' }}>S</button>
+                  <button onClick={() => handleBrushSizeChange(10)} style={{ width: '40px', height: '40px', borderRadius: '50%', border: 'none', marginRight: '10px' }}>M</button>
+                  <button onClick={() => handleBrushSizeChange(15)} style={{ width: '50px', height: '50px', borderRadius: '50%', border: 'none', marginRight: '10px' }}>L</button>
+                </div>
+              </div>
+            </div>
+            <button onClick={nextStep}>Next</button>
+          </div>
+        ) : (
+          <div>
+            <h2>Enter character's name:</h2>
+            <input type="text" value={characterName} onChange={handleNameInputChange} />
+            <button onClick={handleSendButtonClick}>Send</button>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

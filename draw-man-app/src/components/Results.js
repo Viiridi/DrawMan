@@ -1,8 +1,9 @@
 import React, { useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import './results.css'; // Import the CSS file
 
-function Results({ players }) {
+function Results({ players, player }) {
   const playerNames = useRef([]);
 
   useEffect(() => {
@@ -57,6 +58,21 @@ function Results({ players }) {
     img.src = imageData;
   };
 
+  const handleGoBack = () => {
+    // Navigate back to player selection page
+    window.location.href = '/playerselection';
+  };
+
+  const handleStartOver = () => {
+    // Clear the localStorage items for all players
+    for (let i = 1; i <= 3; i++) {
+      localStorage.removeItem(`drawingDataPlayer${i}`);
+    }
+  
+    // Redirect to player selection page
+    window.location.href = '/playerselection';
+  };
+  
   return (
     <div className="container">
       {players && players.map((player, index) => (
@@ -73,6 +89,11 @@ function Results({ players }) {
           </div>
         </div>
       ))}
+      {/* Buttons for going back and starting over */}
+      <div className="button-container">
+        <button onClick={handleGoBack}>Go Back to Player Selection</button>
+        <button onClick={handleStartOver}>Start Over</button>
+      </div>
     </div>
   );
 }
