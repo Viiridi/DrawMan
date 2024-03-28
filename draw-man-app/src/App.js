@@ -9,14 +9,14 @@ function App() {
   const initialPlayers = [1, 2, 3];
   const [players, setPlayers] = useState(initialPlayers);
 
-  console.log('Players:', players); // Add logging to check the players state
+  console.log('Players:', players); // Logging to check the players state
 
   return (
     <Router>
       <Routes>
         <Route path="/" element={<PlayerSelection />} />
         <Route path="/playerselection" element={<PlayerSelection />} />
-        <Route path="/drawboard" element={<DrawBoard />} />
+        <Route path="/drawboard" element={<DrawBoard setPlayers={setPlayers} />} />
         {/* Pass the players array as a prop to the Results component */}
         <Route path="/results" element={<Results players={players} />} />
       </Routes>

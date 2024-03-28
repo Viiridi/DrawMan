@@ -1,4 +1,4 @@
-body {
+.body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
@@ -6,23 +6,22 @@ body {
 
 .container {
     display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
+    justify-content: space-between;
+    align-items: center;
     margin-top: 20px;
     padding: 10px;
 }
 
 .player-container {
-    margin-right: 20px;
+    width: 30%; /* Set width to distribute space evenly */
+    text-align: center; /* Center the content */
 }
 
 .canvas-container {
-    margin-bottom: 0; /* Remove the bottom margin */
+    margin-bottom: 0;
 }
 
 canvas {
     border: 1px solid #000;
-    margin-bottom: 0; /* Remove the bottom margin */
-    width: 200px;
-    height: 200px;
+    margin-bottom: 0;
 }

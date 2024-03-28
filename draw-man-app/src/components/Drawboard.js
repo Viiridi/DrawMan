@@ -17,6 +17,9 @@ function DrawBoard() {
     setPlayer(playerParam);
   }, [location]);
 
+  const canvasWidth = 600; // Define canvas width
+  const canvasHeight = 400; // Define canvas height
+
   const steps = ['head', 'body', 'legs', 'name'];
 
   const nextStep = () => {
@@ -34,7 +37,7 @@ function DrawBoard() {
     setCurrentStep(prevStep => prevStep + 1);
     clearCanvas();
   };
-  
+
   const startDrawing = e => {
     setIsDrawing(true);
     const canvas = canvasRef.current;
@@ -95,8 +98,8 @@ function DrawBoard() {
           <h2>Draw the {steps[currentStep]}</h2>
           <canvas
             ref={canvasRef}
-            width="600"
-            height="400"
+            width={canvasWidth} // Set canvas width
+            height={canvasHeight} // Set canvas height
             style={{ display: 'block', border: '1px solid #000' }}
             onMouseDown={startDrawing}
             onMouseMove={draw}
