@@ -79,11 +79,21 @@ function DrawBoard() {
     const ctx = canvas.getContext('2d');
     ctx.strokeStyle = currentColor;
     ctx.lineWidth = brushSize;
-    ctx.lineTo(offsetX, offsetY); // Use adjusted coordinates
+    ctx.lineCap = 'round'; // Set line cap to round for a smoother brush
+    ctx.lineTo(offsetX, offsetY); // Draw a line to the current mouse position
     ctx.stroke();
-    ctx.beginPath(); // Start a new path for each segment of the line
-    ctx.moveTo(offsetX, offsetY); // Move to the new starting point
+  
+    // Draw a circle at the current mouse position
+    ctx.beginPath();
+    ctx.arc(offsetX, offsetY, brushSize / 2, 0, Math.PI * 2);
+    ctx.fillStyle = currentColor;
+    ctx.fill();
+  
+    // Start a new path for the next segment
+    ctx.beginPath();
+    ctx.moveTo(offsetX, offsetY);
   };
+  
   
 
 
@@ -166,6 +176,9 @@ function DrawBoard() {
               />
             )}
               <div>
+                <div style={{ marginBottom: '20px' }}>
+                  <button onClick={clearCanvas}>Clear</button>
+                </div>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '5px', marginBottom: '20px' }}>
                   <div style={{ backgroundColor: '#ff0000', width: '50px', height: '50px', borderRadius: '50%', cursor: 'pointer' }} onClick={() => handleColorChange('#ff0000')}></div>
                   <div style={{ backgroundColor: '#00ff00', width: '50px', height: '50px', borderRadius: '50%', cursor: 'pointer' }} onClick={() => handleColorChange('#00ff00')}></div>

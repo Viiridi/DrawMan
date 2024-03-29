@@ -1,11 +1,9 @@
-// Results.js
-
 import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import Background from './Background'; // Import the Background component
 import './results.css'; // Import the CSS file
 
-function Results({ players, player }) {
+function Results({ players }) {
     const playerNames = useRef([]);
 
     useEffect(() => {
@@ -75,6 +73,33 @@ function Results({ players, player }) {
         window.location.href = '/playerselection';
     };
 
+    const handleSaveDrawing = (player) => {
+      // Combine all the canvases for the player into one image
+      const headCanvas = document.getElementById(`headCanvasPlayer${player}`);
+      const bodyCanvas = document.getElementById(`bodyCanvasPlayer${player}`);
+      const legsCanvas = document.getElementById(`legsCanvasPlayer${player}`);
+  
+      const combinedCanvas = document.createElement('canvas');
+      combinedCanvas.width = headCanvas.width;
+      combinedCanvas.height = headCanvas.height * 3;
+  
+      const ctx = combinedCanvas.getContext('2d');
+      ctx.drawImage(headCanvas, 0, 0);
+      ctx.drawImage(bodyCanvas, 0, headCanvas.height);
+      ctx.drawImage(legsCanvas, 0, headCanvas.height * 2);
+  
+      // Retrieve the character's name from localStorage
+      const nextPlayer = (player % players.length) + 1;
+      const drawingData = JSON.parse(localStorage.getItem(`drawingDataPlayer${nextPlayer}`)) || {};
+      const playerName = drawingData.name || `Player ${nextPlayer}`;
+  
+      // Save the image with the character's name
+      const link = document.createElement('a');
+      link.href = combinedCanvas.toDataURL('image/png');
+      link.download = `${playerName}.png`;
+      link.click();
+  };
+  
     return (
         <div>
             <div className="background-container">
@@ -92,6 +117,9 @@ function Results({ players, player }) {
                         </div>
                         <div className="canvas-container">
                             <canvas id={`legsCanvasPlayer${player}`} width="400" height="250"></canvas>
+                        </div>
+                        <div className="button-container">
+                            <button onClick={() => handleSaveDrawing(player)}>Save Drawing</button>
                         </div>
                     </div>
                 ))}
