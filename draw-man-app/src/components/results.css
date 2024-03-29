@@ -1,3 +1,10 @@
+/* Results.css */
+
+.container.results-container {
+    position: relative; /* Ensure that the Results container is positioned relative to allow z-index to work */
+    z-index: 1; /* Set a higher z-index for the Results container */
+}
+
 .body {
     font-family: Arial, sans-serif;
     margin: 0;

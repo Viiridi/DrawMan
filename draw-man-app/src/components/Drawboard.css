@@ -1,0 +1,60 @@
+/* PlayerSelection.css */
+
+.container {
+    position: relative;
+  }
+  
+  .background-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Ensure the background is behind everything */
+  }
+  
+  .content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0 auto; /* Horizontally center the content */
+  }
+  
+  .canvas-container {
+    display: flex;
+    margin-right: 20px;
+  }
+  
+  .canvas-container canvas {
+    border: 1px solid #000;
+    cursor: crosshair !important; /* Set cursor to crosshair */
+    }
+
+
+  
+  .controls {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .color-buttons {
+    display: flex;
+    margin-bottom: 20px;
+  }
+  
+  .color-buttons > div {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  
+  .brush-size-buttons button {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: none;
+    margin-right: 10px;
+  }
+  

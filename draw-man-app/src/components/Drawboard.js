@@ -1,5 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import Background from './Background'; // Import the Background component
+import './Drawboard.css'; // Import the CSS file
+import headGuide from '../images/head_guide.png'; // Import the head guide image
+import bodyGuide from '../images/body_guide.png'; // Import the body guide image
+import legsGuide from '../images/leg_guide.png'; // Import the legs guide image
 
 function DrawBoard() {
   const [currentStep, setCurrentStep] = useState(0);
@@ -16,10 +21,19 @@ function DrawBoard() {
     const searchParams = new URLSearchParams(location.search);
     const playerParam = searchParams.get('player');
     setPlayer(playerParam);
+
+    // Fill canvas with white when component mounts
+    const canvas = canvasRef.current;
+    if (canvas) {
+      const ctx = canvas.getContext('2d');
+      ctx.fillStyle = '#ffffff'; // Set fill color to white
+      ctx.fillRect(0, 0, canvas.width, canvas.height); // Draw white rectangle covering the canvas
+    }
   }, [location]);
 
   const steps = ['head', 'body', 'legs', 'name'];
   const instructions = ['Draw the head', 'Draw the body', 'Draw the legs', 'Enter character\'s name'];
+  const guideImages = [headGuide, bodyGuide, legsGuide];
 
   const nextStep = () => {
     const canvas = canvasRef.current;
@@ -38,26 +52,40 @@ function DrawBoard() {
   };
 
   const startDrawing = e => {
+    e.preventDefault(); // Prevent default browser behavior
     setIsDrawing(true);
     const canvas = canvasRef.current;
     if (!canvas) return;
-
+  
+    const rect = canvas.getBoundingClientRect(); // Get the canvas boundaries
+    const offsetX = e.clientX - rect.left; // Adjust X coordinate relative to canvas
+    const offsetY = e.clientY - rect.top; // Adjust Y coordinate relative to canvas
+  
     const ctx = canvas.getContext('2d');
     ctx.beginPath();
-    ctx.moveTo(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
+    ctx.moveTo(offsetX, offsetY);
   };
-
+  
   const draw = e => {
+    e.preventDefault(); // Prevent default browser behavior
     if (!isDrawing) return;
     const canvas = canvasRef.current;
     if (!canvas) return;
-
+  
+    const rect = canvas.getBoundingClientRect(); // Get the canvas boundaries
+    const offsetX = e.clientX - rect.left; // Adjust X coordinate relative to canvas
+    const offsetY = e.clientY - rect.top; // Adjust Y coordinate relative to canvas
+  
     const ctx = canvas.getContext('2d');
-    ctx.strokeStyle = currentColor; // Set the stroke color
-    ctx.lineWidth = brushSize; // Set the brush size
-    ctx.lineTo(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
+    ctx.strokeStyle = currentColor;
+    ctx.lineWidth = brushSize;
+    ctx.lineTo(offsetX, offsetY); // Use adjusted coordinates
     ctx.stroke();
+    ctx.beginPath(); // Start a new path for each segment of the line
+    ctx.moveTo(offsetX, offsetY); // Move to the new starting point
   };
+  
+
 
   const stopDrawing = () => {
     setIsDrawing(false);
@@ -68,8 +96,11 @@ function DrawBoard() {
     if (!canvas) return;
 
     const ctx = canvas.getContext('2d');
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-  };
+    ctx.fillStyle = '#ffffff'; // Set fill color to white
+    ctx.fillRect(0, 0, canvas.width, canvas.height); // Draw white rectangle covering the canvas
+};
+
+
 
   const handleNameInputChange = e => {
     setCharacterName(e.target.value);
@@ -101,22 +132,39 @@ function DrawBoard() {
   };
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-      <div>
+    <div className="container">
+      <div className="background-container">
+        <Background />
+      </div>
+      <div className="content">
         {currentStep < 3 ? (
           <div>
             <h2>{instructions[currentStep]}</h2>
-            <div style={{ display: 'flex' }}>
-              <canvas
-                ref={canvasRef}
-                width="600"
-                height="400"
-                style={{ border: '1px solid #000', marginRight: '20px' }}
-                onMouseDown={startDrawing}
-                onMouseMove={draw}
-                onMouseUp={stopDrawing}
-                onMouseOut={stopDrawing}
-              ></canvas>
+            <div style={{ display: 'flex', position: 'relative' }}>
+            <canvas
+            ref={canvasRef}
+            width="600"
+            height="400"
+            style={{ border: '1px solid #000', marginRight: '20px', cursor: 'crosshair' }}
+            onMouseDown={startDrawing}
+            onMouseMove={draw}
+            onMouseUp={stopDrawing}
+            onMouseOut={stopDrawing}
+            onDragStart={() => false} // Prevent default drag behavior
+          ></canvas>
+          {currentStep < 3 && (
+              <img
+                src={guideImages[currentStep]}
+                alt={`Guide for ${steps[currentStep]}`}
+                style={{
+                  position: 'absolute',
+                  bottom: 0,
+                  left: 0,
+                  opacity: 0.25,
+                  pointerEvents: 'none' // Ensure the image doesn't capture pointer events
+                }}
+              />
+            )}
               <div>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '5px', marginBottom: '20px' }}>
                   <div style={{ backgroundColor: '#ff0000', width: '50px', height: '50px', borderRadius: '50%', cursor: 'pointer' }} onClick={() => handleColorChange('#ff0000')}></div>
